@@ -6,22 +6,43 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import jhonatan.sabadi.inchurch.R
+import jhonatan.sabadi.inchurch.interfaces.RecyclerViewItemListener
 import jhonatan.sabadi.inchurch.model.Movie
 
+class MovieAdapter(
+    private val onRecyclerViewItemListener: RecyclerViewItemListener
+) : PagedListAdapter<Movie, MovieAdapter.MovieViewHolder>(DiffUtilCallBack()) {
 
-class MovieAdapter : PagedListAdapter<Movie, MovieAdapter.MovieViewHolder>(DiffUtilCallBack()) {
+    private val movies = listOf<Movie>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder =
-        MovieViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
+        val movieViewHolder = MovieViewHolder(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.recycler_movie, parent, false)
         )
+        val adapterPosition = movieViewHolder.adapterPosition
+        movieViewHolder.itemView.apply {
+            setOnClickListener {
+                onRecyclerViewItemListener.setOnRecyclerItemClick(it, adapterPosition)
+            }
+            setOnLongClickListener {
+                onRecyclerViewItemListener.setOnRecyclerItemLongClick(it, adapterPosition)
+                true
+            }
+        }
+        return movieViewHolder
+    }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-
+        val movie = movies[position]
+        holder.bind(movie)
     }
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        fun bind(movie: Movie) {
+
+        }
 
     }
 }
