@@ -2,6 +2,7 @@ package jhonatan.sabadi.inchurch.model
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Result(
     @SerializedName("page")
@@ -12,4 +13,4 @@ data class Result(
     val totalPages: Int,
     @SerializedName("results")
     val results: List<Movie>
-)
+) : Serializable

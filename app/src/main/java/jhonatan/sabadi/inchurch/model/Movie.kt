@@ -2,6 +2,7 @@ package jhonatan.sabadi.inchurch.model
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Movie(
     @SerializedName("popularity")
@@ -32,4 +33,4 @@ data class Movie(
     val overview: String,
     @SerializedName("release_date")
     val releaseDate: String
-)
+) : Serializable
