@@ -2,7 +2,7 @@ package jhonatan.sabadi.inchurch.interfaces
 
 import android.view.View
 
-interface RecyclerViewItemListener {
+interface OnRecyclerViewItemListener {
 
     fun setOnRecyclerItemClick(view: View, position: Int)
 

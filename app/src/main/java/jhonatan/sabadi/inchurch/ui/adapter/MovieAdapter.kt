@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import jhonatan.sabadi.inchurch.R
-import jhonatan.sabadi.inchurch.interfaces.RecyclerViewItemListener
+import jhonatan.sabadi.inchurch.interfaces.OnRecyclerViewItemListener
 import jhonatan.sabadi.inchurch.model.Movie
 
 class MovieAdapter(
-    private val onRecyclerViewItemListener: RecyclerViewItemListener
+    private val onOnRecyclerViewItemListener: OnRecyclerViewItemListener
 ) : PagedListAdapter<Movie, MovieAdapter.MovieViewHolder>(DiffUtilCallBack()) {
 
     private val movies = listOf<Movie>()
@@ -23,10 +23,10 @@ class MovieAdapter(
         val adapterPosition = movieViewHolder.adapterPosition
         movieViewHolder.itemView.apply {
             setOnClickListener {
-                onRecyclerViewItemListener.setOnRecyclerItemClick(it, adapterPosition)
+                onOnRecyclerViewItemListener.setOnRecyclerItemClick(it, adapterPosition)
             }
             setOnLongClickListener {
-                onRecyclerViewItemListener.setOnRecyclerItemLongClick(it, adapterPosition)
+                onOnRecyclerViewItemListener.setOnRecyclerItemLongClick(it, adapterPosition)
                 true
             }
         }

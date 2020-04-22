@@ -1,5 +1,6 @@
 package jhonatan.sabadi.inchurch.api.call
 
+import androidx.paging.PagedList
 import jhonatan.sabadi.inchurch.model.Genre
 import jhonatan.sabadi.inchurch.model.Movie
 import retrofit2.Call
@@ -13,7 +14,7 @@ interface MovieApi {
         @Query("api_key") apiKey: String? = "639fef3ed98e333f7d0da8310b6ec26a",
         @Query("language") language: String? = "pt-BR",
         @Query("page") page: Int
-    ): Call<List<Movie>>
+    ): Call<PagedList<Movie>>
 
     @GET("/3/genre/movie/list")
     fun getGenres(
