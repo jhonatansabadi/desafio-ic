@@ -3,6 +3,7 @@ package jhonatan.sabadi.inchurch.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import jhonatan.sabadi.inchurch.R
@@ -20,17 +21,28 @@ class MovieAdapter(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.recycler_movie, parent, false)
         )
-        val adapterPosition = movieViewHolder.adapterPosition
+        val adapterPosition = movieViewHolder.adapterPosition + 1
         movieViewHolder.itemView.apply {
-            setOnClickListener {
-                onOnRecyclerViewItemListener.setOnRecyclerItemClick(it, adapterPosition)
-            }
-            setOnLongClickListener {
-                onOnRecyclerViewItemListener.setOnRecyclerItemLongClick(it, adapterPosition)
-                true
-            }
+            setItemClick(adapterPosition)
+            movieFav.setFavClick(adapterPosition)
         }
         return movieViewHolder
+    }
+
+    private fun View.setItemClick(adapterPosition: Int) {
+        setOnClickListener {
+            onOnRecyclerViewItemListener.setOnRecyclerItemClick(it, adapterPosition, getItem(adapterPosition))
+        }
+        setOnLongClickListener {
+            onOnRecyclerViewItemListener.setOnRecyclerItemLongClick(it, adapterPosition, getItem(adapterPosition))
+            true
+        }
+    }
+
+    private fun CheckBox.setFavClick(adapterPosition: Int) {
+         setOnCheckedChangeListener { buttonView, isChecked ->
+            onOnRecyclerViewItemListener.onFavIconClicked(buttonView, adapterPosition, isChecked, getItem(adapterPosition))
+        }
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {

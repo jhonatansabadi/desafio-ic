@@ -1,14 +1,21 @@
 package jhonatan.sabadi.inchurch.ui.activity
 
+import android.app.ActivityOptions
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.Window
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialContainerTransformSharedElementCallback
 import jhonatan.sabadi.inchurch.R
 import jhonatan.sabadi.inchurch.interfaces.OnRecyclerViewItemListener
+import jhonatan.sabadi.inchurch.model.Movie
 import jhonatan.sabadi.inchurch.repository.MovieRepository
 import jhonatan.sabadi.inchurch.ui.adapter.MovieAdapter
 import jhonatan.sabadi.inchurch.ui.viewmodel.MovieViewModel
@@ -31,6 +38,7 @@ class MovieActivity : AppCompatActivity(), OnRecyclerViewItemListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initSharedElementEffect()
         setContentView(R.layout.activity_movie)
 
         initRecyclerView()
@@ -38,9 +46,17 @@ class MovieActivity : AppCompatActivity(), OnRecyclerViewItemListener {
 
     }
 
+    private fun initSharedElementEffect() {
+        val transformation: MaterialContainerTransform = MaterialContainerTransform().apply {
+            fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
+            duration = 500
+        }
+        window.sharedElementEnterTransition = transformation
+    }
+
     private fun initRecyclerView() {
         recyclerViewMovie.apply {
-            layoutManager = GridLayoutManager(this@MovieActivity, 2)
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             hasFixedSize()
             adapter = movieAdapter
         }
@@ -48,31 +64,29 @@ class MovieActivity : AppCompatActivity(), OnRecyclerViewItemListener {
 
     private fun initMovieList() {
         movieViewModel.movies.observe(this, Observer {
-            Log.d("MovieActivity", "initMovieList: ${it}")
             movieAdapter.submitList(it)
-//            when (it) {
-//                is Resource.Loading -> {
-//
-//                }
-//                is Resource.Success -> {
-//                    Log.d("MovieActivity", "initMovieList: ${it.data}")
-//                    movieAdapter.submitList(it.data)
-//                }
-//                is Resource.Failure -> {
-//
-//                }
-//            }
         })
     }
 
-    override fun setOnRecyclerItemClick(view: View, position: Int) {
+    override fun setOnRecyclerItemClick(view: View, position: Int, movie: Movie?) {
+        movie?.let {
+            val intent = Intent(this, DetailsActivity::class.java).apply {
+                putExtra("movie", it)
+            }
+            val options = ActivityOptions.makeSceneTransitionAnimation(
+                this,
+                view,
+                "movie"
+            )
+            startActivity(intent, options.toBundle())
+        }
     }
 
-    override fun setOnRecyclerItemLongClick(view: View, position: Int) {
+    override fun setOnRecyclerItemLongClick(view: View, position: Int, movie: Movie?) {
 
     }
 
-    override fun onFavIconClicked(view: View, position: Int, isChecked: Boolean) {
+    override fun onFavIconClicked(view: View, position: Int, isChecked: Boolean, movie: Movie?) {
 
     }
 }
