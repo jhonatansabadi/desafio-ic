@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import androidx.paging.PagedList
 import jhonatan.sabadi.inchurch.model.Movie
+import jhonatan.sabadi.inchurch.model.Result
 import jhonatan.sabadi.inchurch.repository.MovieRepository
 import jhonatan.sabadi.inchurch.ui.viewmodel.resource.Resource
 import java.lang.Exception
@@ -17,7 +18,7 @@ class MovieViewModel(
 
     private val movieRepository by lazy { MovieRepository(application) }
 
-    val movies: LiveData<Resource<PagedList<Movie>>>
+    val movies: LiveData<Resource<List<Movie>>>
         get() = _movies
 
     private val _movies = liveData {

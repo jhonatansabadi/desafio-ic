@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import jhonatan.sabadi.inchurch.R
 import jhonatan.sabadi.inchurch.interfaces.OnRecyclerViewItemListener
@@ -47,7 +46,7 @@ class MovieActivity : AppCompatActivity(), OnRecyclerViewItemListener {
                 }
                 is Resource.Success -> {
                     Log.d("MovieActivity", "initMovieList: ${it.data}")
-                    movieAdapter.submitList(it.data)
+                    //movieAdapter.submitList(it.data)
                 }
                 is Resource.Failure -> {
 
@@ -57,7 +56,6 @@ class MovieActivity : AppCompatActivity(), OnRecyclerViewItemListener {
     }
 
     override fun setOnRecyclerItemClick(view: View, position: Int) {
-
     }
 
     override fun setOnRecyclerItemLongClick(view: View, position: Int) {
