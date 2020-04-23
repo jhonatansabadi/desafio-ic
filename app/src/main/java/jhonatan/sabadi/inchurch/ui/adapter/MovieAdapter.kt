@@ -6,14 +6,14 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import jhonatan.sabadi.inchurch.R
+import jhonatan.sabadi.inchurch.extensions.loadImageFromUrl
 import jhonatan.sabadi.inchurch.interfaces.OnRecyclerViewItemListener
 import jhonatan.sabadi.inchurch.model.Movie
+import kotlinx.android.synthetic.main.recycler_movie.view.*
 
 class MovieAdapter(
     private val onOnRecyclerViewItemListener: OnRecyclerViewItemListener
 ) : PagedListAdapter<Movie, MovieAdapter.MovieViewHolder>(DiffUtilCallBack()) {
-
-    private val movies = listOf<Movie>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val movieViewHolder = MovieViewHolder(
@@ -34,15 +34,18 @@ class MovieAdapter(
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        val movie = movies[position]
-        holder.bind(movie)
+        getItem(position)?.let {
+            holder.bind(it)
+        }
     }
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(movie: Movie) {
-
+            itemView.apply {
+                movieTitle.text = movie.title
+                movieImage.loadImageFromUrl(movie.posterPath)
+            }
         }
-
     }
 }

@@ -1,35 +1,36 @@
 package jhonatan.sabadi.inchurch.ui.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
+import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import jhonatan.sabadi.inchurch.api.datasource.MovieDataSourceFactory
 import jhonatan.sabadi.inchurch.model.Movie
-import jhonatan.sabadi.inchurch.model.Result
 import jhonatan.sabadi.inchurch.repository.MovieRepository
 import jhonatan.sabadi.inchurch.ui.viewmodel.resource.Resource
-import java.lang.Exception
 
-class MovieViewModel(
-    application: Application
-) : AndroidViewModel(application) {
+class MovieViewModel(movieRepository: MovieRepository) : ViewModel() {
 
-    private val movieRepository by lazy { MovieRepository(application) }
+    private val movieDataSourceFactory = MovieDataSourceFactory(movieRepository)
 
-    val movies: LiveData<Resource<List<Movie>>>
-        get() = _movies
+    val movies get() = _movies
 
-    private val _movies = liveData {
-        emit(Resource.Loading())
+    private val _movies: LiveData<PagedList<Movie>> = liveData {
         try {
-            val data = movieRepository.getMovies()
-            emit(Resource.Success(data))
+            val data = LivePagedListBuilder(
+                movieDataSourceFactory,
+                pagedListConfig()
+            ).build()
+            emitSource(data)
         } catch (e: Exception) {
             e.printStackTrace()
-            emit(Resource.Failure())
         }
     }
+
+    private fun pagedListConfig() = PagedList.Config.Builder()
+        .setEnablePlaceholders(false)
+        .build()
 
 }
