@@ -24,8 +24,9 @@ class MovieDataSource(
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
         CoroutineScope(Dispatchers.IO).launch {
-            val data = movieRepository.getMovies(1)
-            callback.onResult(data, params.key + 1)
+            val page = params.key + 1
+            val data = movieRepository.getMovies(page)
+            callback.onResult(data, page)
         }
     }
 

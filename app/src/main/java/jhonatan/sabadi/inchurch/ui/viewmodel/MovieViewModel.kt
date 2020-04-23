@@ -30,7 +30,10 @@ class MovieViewModel(movieRepository: MovieRepository) : ViewModel() {
     }
 
     private fun pagedListConfig() = PagedList.Config.Builder()
+        .setInitialLoadSizeHint(5)
         .setEnablePlaceholders(false)
+        .setPageSize(5 * 2)
+        .setPrefetchDistance(5)
         .build()
 
 }

@@ -44,7 +44,9 @@ class MovieAdapter(
         fun bind(movie: Movie) {
             itemView.apply {
                 movieTitle.text = movie.title
-                movieImage.loadImageFromUrl(movie.posterPath)
+                movie.posterPath?.let {
+                    movieImage.loadImageFromUrl(it)
+                }
             }
         }
     }

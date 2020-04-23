@@ -12,7 +12,7 @@ data class Movie(
     @SerializedName("video")
     val video: Boolean,
     @SerializedName("poster_path")
-    val posterPath: String,
+    val posterPath: String?,
     @SerializedName("id")
     val id: Int,
     @SerializedName("adult")
