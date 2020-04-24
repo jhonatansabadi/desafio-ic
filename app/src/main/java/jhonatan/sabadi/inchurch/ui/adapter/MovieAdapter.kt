@@ -65,34 +65,37 @@ class MovieAdapter(
         fun bind(movie: Movie) {
             itemView.apply {
                 movieTitle.text = movie.title
-                movie.posterPath?.let {
-                    movieImage.loadImageFromUrl(it)
-                }
+                setImage(movie)
                 movieFav.apply {
-                    if (movie.favMovie == null) {
-                        isChecked = false
-                    } else {
-                        movie.favMovie?.let {
-                            if (it.isChecked) {
-                                isChecked = true
-                            } else {
-                                isChecked = false
-                            }
-                        }
-                    }
-                    setOnClickListener {
-                        isChecked = true
-                        if (movie.favMovie == null) {
-                            movie.favMovie = FavMovie(movieId = movie.id, isChecked = true)
-                        }
-                        onOnRecyclerViewItemListener.onFavIconClicked(
-                            it,
-                            adapterPosition,
-                            isChecked,
-                            movie
-                        )
-                    }
+                    changeFavState(movie)
+                    setOnFavClicked(movie)
                 }
+            }
+        }
+
+        private fun CheckBox.setOnFavClicked(movie: Movie) {
+            setOnClickListener {
+                isChecked = true
+                if (movie.favMovie == null) {
+                    movie.favMovie = FavMovie(movieId = movie.id, isChecked = true)
+                }
+                onOnRecyclerViewItemListener.onFavIconClicked(it, adapterPosition, isChecked, movie)
+            }
+        }
+
+        private fun CheckBox.changeFavState(movie: Movie) {
+            if (movie.favMovie == null) {
+                isChecked = false
+            } else {
+                movie.favMovie?.let {
+                    isChecked = it.isChecked
+                }
+            }
+        }
+
+        private fun View.setImage(movie: Movie) {
+            movie.posterPath?.let {
+                movieImage.loadImageFromUrl(it)
             }
         }
     }
