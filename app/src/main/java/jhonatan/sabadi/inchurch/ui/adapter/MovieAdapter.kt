@@ -75,10 +75,13 @@ class MovieAdapter(
 
         private fun CheckBox.setOnFavClicked(movie: Movie) {
             setOnClickListener {
-                isChecked = true
                 if (movie.favMovie == null) {
-                    movie.favMovie = FavMovie(movieId = movie.id, isChecked = true)
+                    movie.favMovie = FavMovie(movieId = movie.id)
                 }
+                movie.favMovie?.let {
+                    it.isChecked = !it.isChecked
+                }
+                changeFavState(movie)
                 onOnRecyclerViewItemListener.onFavIconClicked(it, adapterPosition, isChecked, movie)
             }
         }

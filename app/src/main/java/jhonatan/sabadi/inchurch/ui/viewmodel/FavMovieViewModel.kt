@@ -18,4 +18,9 @@ class FavMovieViewModel (
         emit(inserted)
     }
 
+    fun delete(movieId: Int) = liveData {
+        val deleted = favMovieRepository.delete(movieId)
+        emit(deleted)
+    }
+
 }

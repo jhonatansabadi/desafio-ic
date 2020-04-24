@@ -10,7 +10,7 @@ Nessa parte do processo de recrutamento você desenvolverá uma aplicação Andr
 	* OK - Tela de Listagem de Filmes exibindo os filmes melhores classificados. Utilizar esse [endpoint](https://developers.themoviedb.org/3/movies/get-popular-movies).
 	* OK - Loading no carregamento da listagem de filmes.
 	* OK - Tratamento de erros(falta de internet e erro na api) na tela de Listagem de Filmes.
-	*	Tela de Favoritos com a listagem dos filmes marcados como favorito. Essa tela será acessada no ícone de favoritos na toolbar da Listagem de Filmes.
+	* Tela de Favoritos com a listagem dos filmes marcados como favorito. Essa tela será acessada no ícone de favoritos na toolbar da Listagem de Filmes.
 	* Tela de detalhe do filme. Para as informações de gêneros do filme, utilize esse [endpoint](https://developers.themoviedb.org/3/genres/get-movie-list).
 	* Ação de favoritar um filme na tela de detalhe. Todo o controle será em armazenamento local.
 

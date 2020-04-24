@@ -18,7 +18,7 @@ interface FavMovieDao {
     @Insert
     suspend fun insert(favMovie: FavMovie): Long
 
-    @Delete
-    suspend fun delete(favMovie: FavMovie)
+    @Query("DELETE FROM FavMovie WHERE movieId == :movieId")
+    suspend fun delete(movieId: Int)
 
 } 

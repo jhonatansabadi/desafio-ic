@@ -19,7 +19,7 @@ class FavMovieRepository(
 
     suspend fun insert(favMovie: FavMovie): Long = favMovieDao.insert(favMovie)
 
-    suspend fun delete(favMovie: FavMovie): Unit = favMovieDao.delete(favMovie)
+    suspend fun delete(movieId: Int): Unit = favMovieDao.delete(movieId)
 
 
 }

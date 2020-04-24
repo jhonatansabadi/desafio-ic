@@ -130,16 +130,29 @@ class MovieActivity :
 
     override fun onFavIconClicked(view: View, position: Int, isChecked: Boolean, movie: Movie?) {
         movie?.let {
-            if (isChecked) {
-                val favMovie = FavMovie(
-                    movieId = it.id,
-                    isChecked = isChecked
-                )
-                favMovieViewModel.insert(favMovie).observe(this, Observer {
-                    Toast.makeText(this, "Adicionado aos Favoritos", Toast.LENGTH_SHORT).show()
-                })
+            when {
+                isChecked -> insertFav(it, isChecked)
+                else -> deleteFav(it)
             }
         }
+    }
+
+    private fun deleteFav(movie: Movie) {
+        movie.favMovie?.let {
+            favMovieViewModel.delete(it.movieId).observe(this, Observer {
+                Toast.makeText(this, "Removido dos Favoritos", Toast.LENGTH_SHORT).show()
+            })
+        }
+    }
+
+    private fun insertFav(movie: Movie, isChecked: Boolean) {
+        val favMovie = FavMovie(
+            movieId = movie.id,
+            isChecked = isChecked
+        )
+        favMovieViewModel.insert(favMovie).observe(this, Observer {
+            Toast.makeText(this, "Adicionado aos Favoritos", Toast.LENGTH_SHORT).show()
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
