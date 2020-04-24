@@ -1,9 +1,10 @@
 package jhonatan.sabadi.inchurch.api.call
 
-import androidx.paging.PagedList
 import jhonatan.sabadi.inchurch.model.Genre
+import jhonatan.sabadi.inchurch.model.Movie
 import jhonatan.sabadi.inchurch.model.Result
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 

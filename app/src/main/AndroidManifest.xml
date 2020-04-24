@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="jhonatan.sabadi.inchurch">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -13,7 +14,6 @@
         android:theme="@style/Theme.App">
         <activity
             android:name=".ui.activity.DetailsActivity"
-            android:label="@string/title_activity_details"
             android:theme="@style/Theme.App.NoActionBar"></activity>
         <activity android:name=".ui.activity.MovieActivity">
             <intent-filter>

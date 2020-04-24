@@ -20,5 +20,4 @@ class DetailsActivity : AppCompatActivity() {
         toolbar_layout.title = title
     }
 
-
 }

@@ -7,6 +7,7 @@ import jhonatan.sabadi.inchurch.api.retrofit.RetrofitService
 import jhonatan.sabadi.inchurch.model.Movie
 import jhonatan.sabadi.inchurch.model.Result
 import retrofit2.await
+import java.lang.Exception
 
 class MovieRepository{
 
@@ -16,7 +17,12 @@ class MovieRepository{
 
 
     suspend fun getMovies(page: Int): List<Movie> {
-        val data = retrofit.getMovies(page = page).await()
-        return data.results
+        try {
+            val data = retrofit.getMovies(page = page).await()
+            return data?.results
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return listOf()
+        }
     }
 }

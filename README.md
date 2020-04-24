@@ -7,15 +7,15 @@ Nessa parte do processo de recrutamento você desenvolverá uma aplicação Andr
 ## Requisitos
 
 + ### O que deve ter:
-	* Tela de Listagem de Filmes exibindo os filmes melhores classificados. Utilizar esse [endpoint](https://developers.themoviedb.org/3/movies/get-popular-movies).
-	* Loading no carregamento da listagem de filmes.
-	* Tratamento de erros(falta de internet e erro na api) na tela de Listagem de Filmes.
+	* OK - Tela de Listagem de Filmes exibindo os filmes melhores classificados. Utilizar esse [endpoint](https://developers.themoviedb.org/3/movies/get-popular-movies).
+	* OK - Loading no carregamento da listagem de filmes.
+	* OK - Tratamento de erros(falta de internet e erro na api) na tela de Listagem de Filmes.
 	*	Tela de Favoritos com a listagem dos filmes marcados como favorito. Essa tela será acessada no ícone de favoritos na toolbar da Listagem de Filmes.
 	* Tela de detalhe do filme. Para as informações de gêneros do filme, utilize esse [endpoint](https://developers.themoviedb.org/3/genres/get-movie-list).
 	* Ação de favoritar um filme na tela de detalhe. Todo o controle será em armazenamento local.
 
 + ### Pontos extras:
-	* Paginação com scroll infinito na tela de filmes.
+	* OK - Paginação com scroll infinito na tela de filmes.
 	* Filtro de busca pelo nome do filme na tela de Favoritos. Exibir uma tela diferente para quando não houver resultado na busca.
 	* Ação de remover o filme da lista de Favoritos.
 	* Testes unitários.

@@ -4,23 +4,19 @@ import android.app.ActivityOptions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.view.Window
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.transition.MaterialContainerTransform
-import com.google.android.material.transition.MaterialContainerTransformSharedElementCallback
 import jhonatan.sabadi.inchurch.R
+import jhonatan.sabadi.inchurch.extensions.isNetworkAvailable
 import jhonatan.sabadi.inchurch.interfaces.OnRecyclerViewItemListener
 import jhonatan.sabadi.inchurch.model.Movie
 import jhonatan.sabadi.inchurch.repository.MovieRepository
 import jhonatan.sabadi.inchurch.ui.adapter.MovieAdapter
 import jhonatan.sabadi.inchurch.ui.viewmodel.MovieViewModel
 import jhonatan.sabadi.inchurch.ui.viewmodel.factory.MovieViewModelFactory
-import jhonatan.sabadi.inchurch.ui.viewmodel.resource.Resource
 import kotlinx.android.synthetic.main.activity_movie.*
 
 class MovieActivity : AppCompatActivity(), OnRecyclerViewItemListener {
@@ -41,8 +37,9 @@ class MovieActivity : AppCompatActivity(), OnRecyclerViewItemListener {
         initSharedElementEffect()
         setContentView(R.layout.activity_movie)
 
+        showLoading()
         initRecyclerView()
-        initMovieList()
+        checkInternetAndInitMovieList()
 
     }
 
@@ -62,11 +59,42 @@ class MovieActivity : AppCompatActivity(), OnRecyclerViewItemListener {
         }
     }
 
+    private fun checkInternetAndInitMovieList() {
+            when {
+                isNetworkAvailable() -> {
+                    hideEmptyBackground()
+                    initMovieList()
+                }
+                else-> {
+                    showEmptyBackground()
+                    hideLoading()
+                }
+            }
+    }
+
     private fun initMovieList() {
         movieViewModel.movies.observe(this, Observer {
             movieAdapter.submitList(it)
+            hideLoading()
         })
     }
+
+    private fun showEmptyBackground() {
+        noInternetMovie.visibility = View.VISIBLE
+    }
+
+    private fun hideEmptyBackground() {
+        noInternetMovie.visibility = View.GONE
+    }
+
+    private fun showLoading() {
+        progressLoadingMovie.visibility = View.VISIBLE
+    }
+
+    private fun hideLoading() {
+        progressLoadingMovie.visibility = View.GONE
+    }
+
 
     override fun setOnRecyclerItemClick(view: View, position: Int, movie: Movie?) {
         movie?.let {
