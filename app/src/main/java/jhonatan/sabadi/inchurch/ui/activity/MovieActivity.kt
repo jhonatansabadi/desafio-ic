@@ -4,6 +4,8 @@ import android.app.ActivityOptions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -19,7 +21,9 @@ import jhonatan.sabadi.inchurch.ui.viewmodel.MovieViewModel
 import jhonatan.sabadi.inchurch.ui.viewmodel.factory.MovieViewModelFactory
 import kotlinx.android.synthetic.main.activity_movie.*
 
-class MovieActivity : AppCompatActivity(), OnRecyclerViewItemListener {
+class MovieActivity :
+    AppCompatActivity(),
+    OnRecyclerViewItemListener {
 
     private val movieViewModel by lazy {
         val movieRepository = MovieRepository()
@@ -117,4 +121,31 @@ class MovieActivity : AppCompatActivity(), OnRecyclerViewItemListener {
     override fun onFavIconClicked(view: View, position: Int, isChecked: Boolean, movie: Movie?) {
 
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_movie, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menuFavMovie -> openFavMovies()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun openFavMovies() {
+        val intent = Intent(this, FavMovieActivity::class.java)
+        startActivity(intent)
+    }
+
 }
+
+
+
+
+
+
+
+
+
