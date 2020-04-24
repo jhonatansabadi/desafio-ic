@@ -1,5 +1,6 @@
 package jhonatan.sabadi.inchurch.ui.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,9 +12,11 @@ import jhonatan.sabadi.inchurch.model.Movie
 import jhonatan.sabadi.inchurch.repository.MovieRepository
 import jhonatan.sabadi.inchurch.ui.viewmodel.resource.Resource
 
-class MovieViewModel(movieRepository: MovieRepository) : ViewModel() {
+class MovieViewModel(
+    private val context: Context
+) : ViewModel() {
 
-    private val movieDataSourceFactory = MovieDataSourceFactory(movieRepository)
+    private val movieDataSourceFactory = MovieDataSourceFactory(context)
 
     val movies get() = _movies
 

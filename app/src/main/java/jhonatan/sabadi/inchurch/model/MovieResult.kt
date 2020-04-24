@@ -4,7 +4,7 @@ package jhonatan.sabadi.inchurch.model
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class Result(
+data class MovieResult(
     @SerializedName("page")
     val page: Int,
     @SerializedName("total_results")

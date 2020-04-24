@@ -1,5 +1,6 @@
 package jhonatan.sabadi.inchurch.api.datasource
 
+import android.content.Context
 import androidx.paging.PageKeyedDataSource
 import jhonatan.sabadi.inchurch.model.Movie
 import jhonatan.sabadi.inchurch.repository.MovieRepository
@@ -9,8 +10,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MovieDataSource(
-    private val movieRepository: MovieRepository
+    private val context: Context
 ) : PageKeyedDataSource<Int, Movie>() {
+
+    private val movieRepository = MovieRepository(context)
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,

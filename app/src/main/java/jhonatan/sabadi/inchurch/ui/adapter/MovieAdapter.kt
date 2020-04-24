@@ -1,14 +1,17 @@
 package jhonatan.sabadi.inchurch.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import androidx.paging.PagedList
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import jhonatan.sabadi.inchurch.R
 import jhonatan.sabadi.inchurch.extensions.loadImageFromUrl
 import jhonatan.sabadi.inchurch.interfaces.OnRecyclerViewItemListener
+import jhonatan.sabadi.inchurch.model.FavMovie
 import jhonatan.sabadi.inchurch.model.Movie
 import kotlinx.android.synthetic.main.recycler_movie.view.*
 
@@ -19,31 +22,34 @@ class MovieAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val movieViewHolder = MovieViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.recycler_movie, parent, false)
+                .inflate(R.layout.recycler_movie, parent, false),
+            onOnRecyclerViewItemListener
         )
-        val adapterPosition = movieViewHolder.adapterPosition + 1
+        val adapterPosition = movieViewHolder.layoutPosition + 1
         movieViewHolder.itemView.apply {
             setItemClick(adapterPosition)
-            movieFav.setFavClick(adapterPosition)
         }
         return movieViewHolder
     }
 
     private fun View.setItemClick(adapterPosition: Int) {
         setOnClickListener {
-            onOnRecyclerViewItemListener.setOnRecyclerItemClick(it, adapterPosition, getItem(adapterPosition))
+            onOnRecyclerViewItemListener.setOnRecyclerItemClick(
+                it,
+                adapterPosition,
+                getItem(adapterPosition)
+            )
         }
         setOnLongClickListener {
-            onOnRecyclerViewItemListener.setOnRecyclerItemLongClick(it, adapterPosition, getItem(adapterPosition))
+            onOnRecyclerViewItemListener.setOnRecyclerItemLongClick(
+                it,
+                adapterPosition,
+                getItem(adapterPosition)
+            )
             true
         }
     }
 
-    private fun CheckBox.setFavClick(adapterPosition: Int) {
-         setOnCheckedChangeListener { buttonView, isChecked ->
-            onOnRecyclerViewItemListener.onFavIconClicked(buttonView, adapterPosition, isChecked, getItem(adapterPosition))
-        }
-    }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         getItem(position)?.let {
@@ -51,13 +57,41 @@ class MovieAdapter(
         }
     }
 
-    class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class MovieViewHolder(
+        itemView: View,
+        private val onOnRecyclerViewItemListener: OnRecyclerViewItemListener
+    ) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(movie: Movie) {
             itemView.apply {
                 movieTitle.text = movie.title
                 movie.posterPath?.let {
                     movieImage.loadImageFromUrl(it)
+                }
+                movieFav.apply {
+                    if (movie.favMovie == null) {
+                        isChecked = false
+                    } else {
+                        movie.favMovie?.let {
+                            if (it.isChecked) {
+                                isChecked = true
+                            } else {
+                                isChecked = false
+                            }
+                        }
+                    }
+                    setOnClickListener {
+                        isChecked = true
+                        if (movie.favMovie == null) {
+                            movie.favMovie = FavMovie(movieId = movie.id, isChecked = true)
+                        }
+                        onOnRecyclerViewItemListener.onFavIconClicked(
+                            it,
+                            adapterPosition,
+                            isChecked,
+                            movie
+                        )
+                    }
                 }
             }
         }

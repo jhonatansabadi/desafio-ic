@@ -7,17 +7,22 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.transition.MaterialContainerTransform
 import jhonatan.sabadi.inchurch.R
+import jhonatan.sabadi.inchurch.database.room.RoomDBSingleton
 import jhonatan.sabadi.inchurch.extensions.isNetworkAvailable
 import jhonatan.sabadi.inchurch.interfaces.OnRecyclerViewItemListener
+import jhonatan.sabadi.inchurch.model.FavMovie
 import jhonatan.sabadi.inchurch.model.Movie
 import jhonatan.sabadi.inchurch.repository.MovieRepository
 import jhonatan.sabadi.inchurch.ui.adapter.MovieAdapter
+import jhonatan.sabadi.inchurch.ui.viewmodel.FavMovieViewModel
 import jhonatan.sabadi.inchurch.ui.viewmodel.MovieViewModel
+import jhonatan.sabadi.inchurch.ui.viewmodel.factory.FavMovieViewModelFactory
 import jhonatan.sabadi.inchurch.ui.viewmodel.factory.MovieViewModelFactory
 import kotlinx.android.synthetic.main.activity_movie.*
 
@@ -26,10 +31,15 @@ class MovieActivity :
     OnRecyclerViewItemListener {
 
     private val movieViewModel by lazy {
-        val movieRepository = MovieRepository()
-        val factory by lazy { MovieViewModelFactory(movieRepository) }
+        val factory by lazy { MovieViewModelFactory(application) }
         val provider = ViewModelProviders.of(this, factory)
         provider.get(MovieViewModel::class.java)
+    }
+
+    private val favMovieViewModel by lazy {
+        val factory by lazy { FavMovieViewModelFactory(application) }
+        val provider = ViewModelProviders.of(this, factory)
+        provider.get(FavMovieViewModel::class.java)
     }
 
     private val movieAdapter by lazy {
@@ -64,16 +74,16 @@ class MovieActivity :
     }
 
     private fun checkInternetAndInitMovieList() {
-            when {
-                isNetworkAvailable() -> {
-                    hideEmptyBackground()
-                    initMovieList()
-                }
-                else-> {
-                    showEmptyBackground()
-                    hideLoading()
-                }
+        when {
+            isNetworkAvailable() -> {
+                hideEmptyBackground()
+                initMovieList()
             }
+            else -> {
+                showEmptyBackground()
+                hideLoading()
+            }
+        }
     }
 
     private fun initMovieList() {
@@ -119,7 +129,17 @@ class MovieActivity :
     }
 
     override fun onFavIconClicked(view: View, position: Int, isChecked: Boolean, movie: Movie?) {
-
+        movie?.let {
+            if (isChecked) {
+                val favMovie = FavMovie(
+                    movieId = it.id,
+                    isChecked = isChecked
+                )
+                favMovieViewModel.insert(favMovie).observe(this, Observer {
+                    Toast.makeText(this, "Adicionado aos Favoritos", Toast.LENGTH_SHORT).show()
+                })
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
