@@ -18,7 +18,7 @@ class FavMovieViewModel (
 
     private val _favMovies = liveData {
         val data = favMovieRepository.getAll()
-        emit(data)
+        emitSource(data)
     }
 
     fun insert(favMovie: Movie) = liveData {

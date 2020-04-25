@@ -1,5 +1,6 @@
 package jhonatan.sabadi.inchurch.database.dao
 
+import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Insert
@@ -12,7 +13,7 @@ import jhonatan.sabadi.inchurch.model.Movie
 interface FavMovieDao {
 
     @Query("SELECT * FROM movie")
-    suspend fun getAll(): List<Movie>
+    fun getAll(): LiveData<List<Movie>>
 
     @Query("SELECT * FROM movie WHERE id == :movieId")
     suspend fun getByMovieId(movieId: Int): Movie

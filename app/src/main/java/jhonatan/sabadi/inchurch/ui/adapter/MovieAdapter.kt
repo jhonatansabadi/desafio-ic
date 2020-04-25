@@ -16,42 +16,24 @@ class MovieAdapter(
     private val onOnRecyclerViewItemListener: OnRecyclerViewItemListener
 ) : PagedListAdapter<Movie, MovieAdapter.MovieViewHolder>(DiffUtilCallBack()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        val movieViewHolder = MovieViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder =
+        MovieViewHolder(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.recycler_movie, parent, false),
             onOnRecyclerViewItemListener
         )
-        val adapterPosition = movieViewHolder.layoutPosition + 1
-        movieViewHolder.itemView.apply {
-            setItemClick(adapterPosition)
-        }
-        return movieViewHolder
-    }
-
-    private fun View.setItemClick(adapterPosition: Int) {
-        setOnClickListener {
-            onOnRecyclerViewItemListener.setOnRecyclerItemClick(
-                it,
-                adapterPosition,
-                getItem(adapterPosition)
-            )
-        }
-        setOnLongClickListener {
-            onOnRecyclerViewItemListener.setOnRecyclerItemLongClick(
-                it,
-                adapterPosition,
-                getItem(adapterPosition)
-            )
-            true
-        }
-    }
-
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         getItem(position)?.let {
             holder.bind(it)
         }
+    }
+
+    fun changeFavState(position: Int, isFavorite: Boolean) {
+        getItem(position)?.let {
+            it.isFavorite = isFavorite
+        }
+        notifyItemChanged(position)
     }
 
     class MovieViewHolder(
@@ -63,16 +45,39 @@ class MovieAdapter(
             itemView.apply {
                 movieTitle.text = movie.title
                 setImage(movie)
+                setItemClick(movie)
                 movieFav.apply {
-                    if (movie.isFavorite == null) {
-                        isChecked = false
-                    } else {
-                        movie.isFavorite?.let {
-                            isChecked = it
-                        }
-                    }
+                    changeFavState(movie)
                     setOnFavClicked(movie)
                 }
+            }
+        }
+
+        private fun CheckBox.changeFavState(movie: Movie) {
+            if (movie.isFavorite == null) {
+                isChecked = false
+            } else {
+                movie.isFavorite?.let {
+                    isChecked = it
+                }
+            }
+        }
+
+        private fun View.setItemClick(movie: Movie) {
+            setOnClickListener {
+                onOnRecyclerViewItemListener.setOnRecyclerItemClick(
+                    it,
+                    adapterPosition,
+                    movie
+                )
+            }
+            setOnLongClickListener {
+                onOnRecyclerViewItemListener.setOnRecyclerItemLongClick(
+                    it,
+                    adapterPosition,
+                    movie
+                )
+                true
             }
         }
 
@@ -102,5 +107,6 @@ class MovieAdapter(
                 movieImage.loadImageFromUrl(it)
             }
         }
+
     }
 }

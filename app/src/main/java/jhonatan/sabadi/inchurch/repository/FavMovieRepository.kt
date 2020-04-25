@@ -1,6 +1,7 @@
 package jhonatan.sabadi.inchurch.repository
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import jhonatan.sabadi.inchurch.database.room.RoomDBSingleton
 import jhonatan.sabadi.inchurch.model.Movie
@@ -14,7 +15,7 @@ class FavMovieRepository(
         db.favModieDao()
     }
 
-    suspend fun getAll(): List<Movie> = favMovieDao.getAll()
+    fun getAll(): LiveData<List<Movie>> = favMovieDao.getAll()
 
     suspend fun getByMovieId(movieId: Int): Movie = favMovieDao.getByMovieId(movieId)
 

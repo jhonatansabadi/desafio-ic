@@ -27,6 +27,8 @@ class MovieActivity :
     AppCompatActivity(),
     OnRecyclerViewItemListener {
 
+    private val REQUEST_CODE: Int = 0
+
     private val movieViewModel by lazy {
         val factory by lazy { MovieViewModelFactory(application) }
         val provider = ViewModelProviders.of(this, factory)
@@ -42,6 +44,7 @@ class MovieActivity :
     private val movieAdapter by lazy {
         MovieAdapter(this)
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,13 +114,25 @@ class MovieActivity :
         movie?.let {
             val intent = Intent(this, DetailsActivity::class.java).apply {
                 putExtra("movie", it)
+                putExtra("position", position)
             }
             val options = ActivityOptions.makeSceneTransitionAnimation(
                 this,
                 view,
                 "movie"
             )
-            startActivity(intent, options.toBundle())
+            startActivityForResult(intent, REQUEST_CODE, options.toBundle())
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE) {
+            val movie = data?.getSerializableExtra("movie") as Movie
+            val position = data.getIntExtra("position", 0)
+            movie?.let {
+                movieAdapter.changeFavState(position, movie.isFavorite ?: false)
+            }
         }
     }
 

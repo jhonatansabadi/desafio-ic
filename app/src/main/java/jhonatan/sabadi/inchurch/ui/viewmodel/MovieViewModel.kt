@@ -33,7 +33,6 @@ class MovieViewModel(
         }
     }
 
-
     private fun pagedListConfig() = PagedList.Config.Builder()
         .setInitialLoadSizeHint(20)
         .setEnablePlaceholders(false)
