@@ -23,27 +23,19 @@ Nessa parte do processo de recrutamento você desenvolverá uma aplicação Andr
 
 * * *
 
-## O que devo fazer?
+## Informações do Projeto
 
-* Realizar o fork desse repositório.
-* Desenvolver a aplicação usando as melhores práticas de desenvolvimento e totalmente em inglês.
-* Sobrescreva o README falando sobre o que foi utilizado na arquitetura e libs - com uma pequena explicação das decisões adotadas.
-* Enviar seu pull request para o nosso repositório quando finalizar.
+    * Linguagem - Kotlin
+    * Arquitetura - MVVM
+    * REST Client - Retrofi2
+    * Persistência - Room
+    * Scrool Infinito - Paging
+    * Animações e Design - Material Design
+    * JSON Parser - GSON
+    * Carregamento de Imagens - Glide
+    * Operações Assíncronas - Coroutines
 
-* * *
-
-## O que será avaliado?
-
-* Qualidade do código.
-* Organização do projeto.
-* Arquitetura utilizada.
-* Boas práticas de desenvolvimento Android.
-* Crash-safe code, consumo de memória e desempenho.
-
-***É uma avaliação, desenvolva o projeto com qualidade de produção. ;)**
-
-* * *
-
-## Alguma dúvida?
-
-* E-mail: fernando.lima@inchurch.com.br
+* Arquitetura foi escolhida por se tratar de uma indicação da própria Google, por manter os componentes desacoplados e por conta da separação de camadas.
+* As chamadas de API e Local são feitas atrás do ViewModel, retornando sempre um LiveData para camada de UI, desta forma não bloqueando a MainThread.
+* Para paginação foi escolhida a biblioteca de Paginação da Google, tornando o processo mais consistente.
+* Toda aplicação funciona em DarkMode, respeitando a escolha do usuário a nível de sistema.
