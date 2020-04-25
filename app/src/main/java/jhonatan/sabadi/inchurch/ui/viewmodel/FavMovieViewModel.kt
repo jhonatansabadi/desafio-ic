@@ -1,10 +1,11 @@
 package jhonatan.sabadi.inchurch.ui.viewmodel
 
 import android.content.Context
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import jhonatan.sabadi.inchurch.model.FavMovie
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
+import jhonatan.sabadi.inchurch.model.Movie
 import jhonatan.sabadi.inchurch.repository.FavMovieRepository
 
 class FavMovieViewModel (
@@ -13,7 +14,14 @@ class FavMovieViewModel (
 
     val favMovieRepository  = FavMovieRepository(context)
 
-    fun insert(favMovie: FavMovie) = liveData {
+    val favMovies get() = _favMovies
+
+    private val _favMovies = liveData {
+        val data = favMovieRepository.getAll()
+        emit(data)
+    }
+
+    fun insert(favMovie: Movie) = liveData {
         val inserted = favMovieRepository.insert(favMovie)
         emit(inserted)
     }
@@ -22,5 +30,11 @@ class FavMovieViewModel (
         val deleted = favMovieRepository.delete(movieId)
         emit(deleted)
     }
+
+    private fun pagedListConfig() = PagedList.Config.Builder()
+        .setInitialLoadSizeHint(20)
+        .setEnablePlaceholders(false)
+        .setPrefetchDistance(5)
+        .build()
 
 }

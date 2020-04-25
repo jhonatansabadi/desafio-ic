@@ -16,7 +16,8 @@ class MovieViewModel(
     private val context: Context
 ) : ViewModel() {
 
-    private val movieDataSourceFactory = MovieDataSourceFactory(context)
+    private val movieDataSourceFactory by lazy { MovieDataSourceFactory(context) }
+    private val movieRepository by lazy { MovieRepository(context) }
 
     val movies get() = _movies
 
@@ -31,6 +32,7 @@ class MovieViewModel(
             e.printStackTrace()
         }
     }
+
 
     private fun pagedListConfig() = PagedList.Config.Builder()
         .setInitialLoadSizeHint(20)

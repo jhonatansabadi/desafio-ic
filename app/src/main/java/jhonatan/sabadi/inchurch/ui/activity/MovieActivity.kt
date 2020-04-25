@@ -13,12 +13,9 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.transition.MaterialContainerTransform
 import jhonatan.sabadi.inchurch.R
-import jhonatan.sabadi.inchurch.database.room.RoomDBSingleton
 import jhonatan.sabadi.inchurch.extensions.isNetworkAvailable
 import jhonatan.sabadi.inchurch.interfaces.OnRecyclerViewItemListener
-import jhonatan.sabadi.inchurch.model.FavMovie
 import jhonatan.sabadi.inchurch.model.Movie
-import jhonatan.sabadi.inchurch.repository.MovieRepository
 import jhonatan.sabadi.inchurch.ui.adapter.MovieAdapter
 import jhonatan.sabadi.inchurch.ui.viewmodel.FavMovieViewModel
 import jhonatan.sabadi.inchurch.ui.viewmodel.MovieViewModel
@@ -138,19 +135,14 @@ class MovieActivity :
     }
 
     private fun deleteFav(movie: Movie) {
-        movie.favMovie?.let {
-            favMovieViewModel.delete(it.movieId).observe(this, Observer {
-                Toast.makeText(this, "Removido dos Favoritos", Toast.LENGTH_SHORT).show()
-            })
-        }
+        favMovieViewModel.delete(movie.id).observe(this, Observer {
+            Toast.makeText(this, "Removido dos Favoritos", Toast.LENGTH_SHORT).show()
+        })
     }
 
     private fun insertFav(movie: Movie, isChecked: Boolean) {
-        val favMovie = FavMovie(
-            movieId = movie.id,
-            isChecked = isChecked
-        )
-        favMovieViewModel.insert(favMovie).observe(this, Observer {
+        movie.isFavorite = isChecked
+        favMovieViewModel.insert(movie).observe(this, Observer {
             Toast.makeText(this, "Adicionado aos Favoritos", Toast.LENGTH_SHORT).show()
         })
     }

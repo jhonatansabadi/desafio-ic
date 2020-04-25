@@ -3,8 +3,6 @@ package jhonatan.sabadi.inchurch.repository
 import android.content.Context
 import jhonatan.sabadi.inchurch.api.call.MovieApi
 import jhonatan.sabadi.inchurch.api.retrofit.RetrofitService
-import jhonatan.sabadi.inchurch.database.dao.FavMovieDao
-import jhonatan.sabadi.inchurch.model.FavMovie
 import jhonatan.sabadi.inchurch.model.Movie
 import jhonatan.sabadi.inchurch.model.MovieResult
 import retrofit2.await
@@ -25,7 +23,7 @@ class MovieRepository(
     suspend fun getMovies(page: Int): List<Movie> {
         try {
             val data = retrofit.getMovies(page = page).await()
-            val movies = getFavMovie(data)
+            val movies = setFavMovie(data)
             return movies
         } catch (e: Exception) {
             e.printStackTrace()
@@ -33,9 +31,13 @@ class MovieRepository(
         }
     }
 
-    private suspend fun getFavMovie(data: MovieResult): List<Movie> {
+
+    private suspend fun setFavMovie(data: MovieResult): List<Movie> {
         val movies = data.results.map {
-            it.favMovie = favMovieRepository.getByMovieId(it.id)
+            val favMovie = favMovieRepository.getByMovieId(it.id)
+            favMovie?.let {
+                it.isFavorite = favMovie.isFavorite
+            }
             it
         }
         return movies

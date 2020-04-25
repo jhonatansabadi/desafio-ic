@@ -1,17 +1,14 @@
 package jhonatan.sabadi.inchurch.ui.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import androidx.paging.PagedList
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import jhonatan.sabadi.inchurch.R
 import jhonatan.sabadi.inchurch.extensions.loadImageFromUrl
 import jhonatan.sabadi.inchurch.interfaces.OnRecyclerViewItemListener
-import jhonatan.sabadi.inchurch.model.FavMovie
 import jhonatan.sabadi.inchurch.model.Movie
 import kotlinx.android.synthetic.main.recycler_movie.view.*
 
@@ -67,7 +64,6 @@ class MovieAdapter(
                 movieTitle.text = movie.title
                 setImage(movie)
                 movieFav.apply {
-                    changeFavState(movie)
                     setOnFavClicked(movie)
                 }
             }
@@ -75,24 +71,9 @@ class MovieAdapter(
 
         private fun CheckBox.setOnFavClicked(movie: Movie) {
             setOnClickListener {
-                if (movie.favMovie == null) {
-                    movie.favMovie = FavMovie(movieId = movie.id)
-                }
-                movie.favMovie?.let {
-                    it.isChecked = !it.isChecked
-                }
-                changeFavState(movie)
+                isChecked = !isChecked
+                movie.isFavorite = isChecked
                 onOnRecyclerViewItemListener.onFavIconClicked(it, adapterPosition, isChecked, movie)
-            }
-        }
-
-        private fun CheckBox.changeFavState(movie: Movie) {
-            if (movie.favMovie == null) {
-                isChecked = false
-            } else {
-                movie.favMovie?.let {
-                    isChecked = it.isChecked
-                }
             }
         }
 

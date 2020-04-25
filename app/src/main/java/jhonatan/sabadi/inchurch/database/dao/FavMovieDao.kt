@@ -1,24 +1,25 @@
 package jhonatan.sabadi.inchurch.database.dao
 
+import androidx.paging.DataSource
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import jhonatan.sabadi.inchurch.model.FavMovie
+import jhonatan.sabadi.inchurch.model.Movie
+
 
 @Dao
 interface FavMovieDao {
 
-    @Query("SELECT * FROM favmovie")
-    suspend fun getAll(): List<FavMovie>
+    @Query("SELECT * FROM movie")
+    suspend fun getAll(): List<Movie>
 
-    @Query("SELECT * FROM favmovie WHERE movieId == :movieId")
-    suspend fun getByMovieId(movieId: Int): FavMovie
+    @Query("SELECT * FROM movie WHERE id == :movieId")
+    suspend fun getByMovieId(movieId: Int): Movie
 
     @Insert
-    suspend fun insert(favMovie: FavMovie): Long
+    suspend fun insert(favMovie: Movie): Long
 
-    @Query("DELETE FROM FavMovie WHERE movieId == :movieId")
+    @Query("DELETE FROM movie WHERE id == :movieId")
     suspend fun delete(movieId: Int)
 
 } 

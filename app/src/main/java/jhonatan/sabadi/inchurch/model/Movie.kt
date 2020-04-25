@@ -1,10 +1,20 @@
 package jhonatan.sabadi.inchurch.model
 
 
+import android.R
+import androidx.room.*
 import com.google.gson.annotations.SerializedName
+import jhonatan.sabadi.inchurch.database.converters.ListConverter
 import java.io.Serializable
 
+@Entity
+@TypeConverters(ListConverter::class)
 data class Movie(
+
+    @SerializedName("id")
+    @PrimaryKey
+    val id: Int,
+
     @SerializedName("popularity")
     val popularity: Double,
     @SerializedName("vote_count")
@@ -13,8 +23,6 @@ data class Movie(
     val video: Boolean,
     @SerializedName("poster_path")
     val posterPath: String?,
-    @SerializedName("id")
-    val id: Int,
     @SerializedName("adult")
     val adult: Boolean,
     @SerializedName("backdrop_path")
@@ -23,8 +31,10 @@ data class Movie(
     val originalLanguage: String,
     @SerializedName("original_title")
     val originalTitle: String,
+
     @SerializedName("genre_ids")
     val genreIds: List<Int>,
+
     @SerializedName("title")
     val title: String,
     @SerializedName("vote_average")
@@ -34,6 +44,6 @@ data class Movie(
     @SerializedName("release_date")
     val releaseDate: String,
 
-    var favMovie: FavMovie? = null
+    var isFavorite: Boolean = false
 
 ) : Serializable
