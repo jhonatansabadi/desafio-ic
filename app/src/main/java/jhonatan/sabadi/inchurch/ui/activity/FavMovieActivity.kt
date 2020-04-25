@@ -1,11 +1,14 @@
 package jhonatan.sabadi.inchurch.ui.activity
 
+import android.app.ActivityOptions
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.transition.MaterialContainerTransform
 import jhonatan.sabadi.inchurch.R
 import jhonatan.sabadi.inchurch.extensions.isNetworkAvailable
 import jhonatan.sabadi.inchurch.interfaces.OnRecyclerViewItemListener
@@ -36,12 +39,21 @@ class FavMovieActivity : AppCompatActivity(), OnRecyclerViewItemListener {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        initSharedElementEffect()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fav_movie)
 
         initRecyclerView()
-        checkInternetAndInitMovieList()
+        initMovieList()
 
+    }
+
+    private fun initSharedElementEffect() {
+        val transformation: MaterialContainerTransform = MaterialContainerTransform().apply {
+            fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
+            duration = 500
+        }
+        window.sharedElementEnterTransition = transformation
     }
 
     private fun initRecyclerView() {
@@ -49,19 +61,6 @@ class FavMovieActivity : AppCompatActivity(), OnRecyclerViewItemListener {
             layoutManager = LinearLayoutManager(this@FavMovieActivity)
             hasFixedSize()
             adapter = favMovieAdapter
-        }
-    }
-
-    private fun checkInternetAndInitMovieList() {
-        when {
-            isNetworkAvailable() -> {
-                //hideEmptyBackground()
-                initMovieList()
-            }
-            else -> {
-//                showEmptyBackground()
-//                hideLoading()
-            }
         }
     }
 
@@ -73,14 +72,26 @@ class FavMovieActivity : AppCompatActivity(), OnRecyclerViewItemListener {
     }
 
     override fun setOnRecyclerItemClick(view: View, position: Int, movie: Movie?) {
-        TODO("Not yet implemented")
+        movie?.let {
+            val intent = Intent(this, DetailsActivity::class.java).apply {
+                putExtra("movie", it)
+            }
+            val options = ActivityOptions.makeSceneTransitionAnimation(
+                this,
+                view,
+                "movie"
+            )
+            startActivity(intent, options.toBundle())
+        }
     }
 
-    override fun setOnRecyclerItemLongClick(view: View, position: Int, movie: Movie?) {
-        TODO("Not yet implemented")
-    }
+    override fun setOnRecyclerItemLongClick(view: View, position: Int, movie: Movie?) {}
 
     override fun onFavIconClicked(view: View, position: Int, isChecked: Boolean, movie: Movie?) {
-        TODO("Not yet implemented")
+        movie?.let {
+            favMovieViewModel.delete(it.id).observe(this, Observer {
+                favMovieAdapter.notifyItemRemoved(position)
+            })
+        }
     }
 }

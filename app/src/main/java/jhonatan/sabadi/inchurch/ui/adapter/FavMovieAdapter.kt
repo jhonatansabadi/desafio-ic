@@ -3,7 +3,9 @@ package jhonatan.sabadi.inchurch.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.chip.Chip
 import jhonatan.sabadi.inchurch.R
 import jhonatan.sabadi.inchurch.extensions.loadImageFromUrl
 import jhonatan.sabadi.inchurch.interfaces.OnRecyclerViewItemListener
@@ -22,8 +24,21 @@ class FavMovieAdapter(
                 R.layout.recycler_fav_movie, parent, false
             )
         )
-        favMovieViewHolder.itemView.setItemClick(favMovieViewHolder.adapterPosition)
+        val adapterPosition = favMovieViewHolder.adapterPosition
+        favMovieViewHolder.itemView.setItemClick(adapterPosition)
+        favMovieViewHolder.itemView.favMovieCheckBox.serOnFavClick(adapterPosition)
         return favMovieViewHolder
+    }
+
+    private fun Chip.serOnFavClick(adapterPosition: Int) {
+        setOnClickListener {
+            onRecyclerViewItemListener.onFavIconClicked(
+                it,
+                adapterPosition,
+                isChecked,
+                favMovies[adapterPosition]
+            )
+        }
     }
 
     private fun View.setItemClick(adapterPosition: Int) {
