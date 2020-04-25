@@ -18,6 +18,7 @@ import jhonatan.sabadi.inchurch.model.Movie
 import jhonatan.sabadi.inchurch.ui.viewmodel.FavMovieViewModel
 import jhonatan.sabadi.inchurch.ui.viewmodel.factory.FavMovieViewModelFactory
 import kotlinx.android.synthetic.main.activity_details.*
+import kotlinx.android.synthetic.main.content_scrolling.*
 
 class DetailsActivity : AppCompatActivity() {
 
@@ -54,11 +55,12 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun loadReleaseDate() {
-
+        detailsDate.text = movie.releaseDate
     }
 
     private fun loadTexts() {
-        collapsing_toolbar.title = movie.title
+        detailsTitle.text = movie.title
+        detailsOverview.text = movie.overview
     }
 
     private fun loadGenres() {
@@ -67,9 +69,11 @@ class DetailsActivity : AppCompatActivity() {
 
     private fun iniToolbar() {
         setSupportActionBar(anim_toolbar)
+        anim_toolbar.setNavigationIcon(R.drawable.ic_back)
+        anim_toolbar.setNavigationOnClickListener { onBackPressed() }
         actionBar?.setDisplayHomeAsUpEnabled(true)
         actionBar?.setDisplayShowHomeEnabled(true)
-        collapsing_toolbar.title = title
+        collapsing_toolbar.title = ""
     }
 
     private fun loadImage() {

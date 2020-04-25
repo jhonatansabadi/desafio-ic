@@ -23,6 +23,7 @@
             app:expandedTitleMarginStart="10dp"
             app:contentScrim="?attr/colorPrimary"
             app:toolbarId="@id/anim_toolbar"
+            app:title=""
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
             <ImageView
@@ -35,6 +36,7 @@
 
 
             <com.google.android.material.appbar.MaterialToolbar
+                app:title=""
                 android:id="@+id/anim_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"

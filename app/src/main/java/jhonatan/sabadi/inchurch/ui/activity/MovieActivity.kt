@@ -177,6 +177,7 @@ class MovieActivity :
     private fun openFavMovies() {
         val intent = Intent(this, FavMovieActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
 }

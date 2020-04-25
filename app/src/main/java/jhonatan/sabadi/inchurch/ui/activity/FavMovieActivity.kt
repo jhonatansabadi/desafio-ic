@@ -42,10 +42,15 @@ class FavMovieActivity : AppCompatActivity(), OnRecyclerViewItemListener {
         initSharedElementEffect()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fav_movie)
-
+        initToolbar()
         initRecyclerView()
         initMovieList()
 
+    }
+
+    private fun initToolbar() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
     private fun initSharedElementEffect() {
@@ -93,5 +98,10 @@ class FavMovieActivity : AppCompatActivity(), OnRecyclerViewItemListener {
                 favMovieAdapter.remove(position)
             })
         }
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, MovieActivity::class.java)
+        startActivity(intent)
     }
 }
