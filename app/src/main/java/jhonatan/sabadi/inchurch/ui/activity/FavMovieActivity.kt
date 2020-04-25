@@ -90,7 +90,7 @@ class FavMovieActivity : AppCompatActivity(), OnRecyclerViewItemListener {
     override fun onFavIconClicked(view: View, position: Int, isChecked: Boolean, movie: Movie?) {
         movie?.let {
             favMovieViewModel.delete(it.id).observe(this, Observer {
-                favMovieAdapter.notifyItemRemoved(position)
+                favMovieAdapter.remove(position)
             })
         }
     }

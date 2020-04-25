@@ -22,24 +22,14 @@ class FavMovieAdapter(
         val favMovieViewHolder = FavMovieViewHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.recycler_fav_movie, parent, false
-            )
+            ),
+            onRecyclerViewItemListener
         )
-        val adapterPosition = favMovieViewHolder.adapterPosition
+        val adapterPosition = favMovieViewHolder.adapterPosition + 1
         favMovieViewHolder.itemView.setItemClick(adapterPosition)
-        favMovieViewHolder.itemView.favMovieCheckBox.serOnFavClick(adapterPosition)
         return favMovieViewHolder
     }
 
-    private fun Chip.serOnFavClick(adapterPosition: Int) {
-        setOnClickListener {
-            onRecyclerViewItemListener.onFavIconClicked(
-                it,
-                adapterPosition,
-                isChecked,
-                favMovies[adapterPosition]
-            )
-        }
-    }
 
     private fun View.setItemClick(adapterPosition: Int) {
         setOnClickListener {
@@ -65,6 +55,11 @@ class FavMovieAdapter(
         notifyDataSetChanged()
     }
 
+    fun remove(position: Int) {
+        favMovies.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
     override fun getItemCount(): Int = favMovies.size
 
     override fun onBindViewHolder(holder: FavMovieViewHolder, position: Int) {
@@ -72,7 +67,10 @@ class FavMovieAdapter(
         holder.bind(movie)
     }
 
-    class FavMovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class FavMovieViewHolder(
+        itemView: View,
+        private val onRecyclerViewItemListener: OnRecyclerViewItemListener
+    ) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(movie: Movie) {
             itemView.apply {
@@ -81,6 +79,14 @@ class FavMovieAdapter(
                 favMovieDate.text = movie.releaseDate
                 movie.posterPath?.let {
                     favMovieImage.loadImageFromUrl(it)
+                }
+                favMovieCheckBox.setOnClickListener {
+                    onRecyclerViewItemListener.onFavIconClicked(
+                        it,
+                        adapterPosition,
+                        true,
+                        movie
+                    )
                 }
             }
         }
