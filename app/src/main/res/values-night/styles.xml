@@ -4,7 +4,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">?android:attr/colorBackground</item>
         <item name="colorPrimaryDark">?android:attr/colorBackground</item>
-        <item name="colorAccent">@color/teal200</item>
+        <item name="colorAccent">@color/colorSecondary</item>
 
         <item name="android:statusBarColor">?android:attr/colorBackground</item>
 

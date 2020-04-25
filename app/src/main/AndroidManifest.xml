@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.App">
 
-        <activity android:name=".ui.activity.FavMovieActivity"></activity>
+        <activity android:name=".ui.activity.FavMovieActivity" android:parentActivityName=".ui.activity.MovieActivity">
+
+        </activity>
 
         <activity
             android:name=".ui.activity.DetailsActivity"

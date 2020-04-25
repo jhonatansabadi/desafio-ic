@@ -2,15 +2,19 @@ package jhonatan.sabadi.inchurch.ui.activity
 
 import android.app.ActivityOptions
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuItemCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.transition.MaterialContainerTransform
 import jhonatan.sabadi.inchurch.R
-import jhonatan.sabadi.inchurch.extensions.isNetworkAvailable
 import jhonatan.sabadi.inchurch.interfaces.OnRecyclerViewItemListener
 import jhonatan.sabadi.inchurch.model.Movie
 import jhonatan.sabadi.inchurch.ui.adapter.FavMovieAdapter
@@ -20,7 +24,11 @@ import jhonatan.sabadi.inchurch.ui.viewmodel.factory.FavMovieViewModelFactory
 import jhonatan.sabadi.inchurch.ui.viewmodel.factory.MovieViewModelFactory
 import kotlinx.android.synthetic.main.activity_fav_movie.*
 
-class FavMovieActivity : AppCompatActivity(), OnRecyclerViewItemListener {
+
+class FavMovieActivity :
+    AppCompatActivity(),
+    OnRecyclerViewItemListener,
+    SearchView.OnQueryTextListener {
 
     private val movieViewModel by lazy {
         val factory by lazy { MovieViewModelFactory(application) }
@@ -51,6 +59,11 @@ class FavMovieActivity : AppCompatActivity(), OnRecyclerViewItemListener {
     private fun initToolbar() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+    }
+
+    override fun onNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     private fun initSharedElementEffect() {
@@ -98,6 +111,37 @@ class FavMovieActivity : AppCompatActivity(), OnRecyclerViewItemListener {
                 favMovieAdapter.remove(position)
             })
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_fav_movie, menu)
+
+        val searchItem: MenuItem? = menu?.findItem(R.id.menuSearch)
+        val searchView = searchItem?.actionView as SearchView
+        searchView.setQueryHint("Pesquise o Filme")
+        searchView.setOnQueryTextListener(this)
+        searchView.setIconified(false)
+
+        searchItem.setOnActionExpandListener(object: MenuItem.OnActionExpandListener{
+            override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+                return true
+            }
+
+            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                favMovieAdapter.removeFilter()
+                return true
+            }
+        })
+        return true
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        favMovieAdapter.filter(query)
+        return true
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        return true
     }
 
     override fun onBackPressed() {

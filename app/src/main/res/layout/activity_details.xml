@@ -55,6 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
+        android:backgroundTint="@color/colorSecondary"
         app:layout_anchor="@id/collapsing_toolbar"
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@drawable/bg_fav" />

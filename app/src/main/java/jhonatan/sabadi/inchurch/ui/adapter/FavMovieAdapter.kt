@@ -17,6 +17,7 @@ class FavMovieAdapter(
 ) : RecyclerView.Adapter<FavMovieAdapter.FavMovieViewHolder>() {
 
     private val favMovies = mutableListOf<Movie>()
+    private val oldFavMovies = mutableListOf<Movie>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavMovieViewHolder {
         val favMovieViewHolder = FavMovieViewHolder(
@@ -65,6 +66,23 @@ class FavMovieAdapter(
     override fun onBindViewHolder(holder: FavMovieViewHolder, position: Int) {
         val movie = favMovies[position]
         holder.bind(movie)
+    }
+
+    fun filter(query: String?) {
+        oldFavMovies.addAll(favMovies)
+        val filteredMovies = mutableListOf<Movie>()
+        query?.let { query ->
+            oldFavMovies.forEach {
+                if (it.title.toLowerCase().contains(query.toLowerCase())) {
+                    filteredMovies.add(it)
+                }
+            }
+        }
+        submitList(filteredMovies)
+    }
+
+    fun removeFilter() {
+        submitList(oldFavMovies)
     }
 
     class FavMovieViewHolder(

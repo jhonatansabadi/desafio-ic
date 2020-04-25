@@ -75,7 +75,7 @@
             android:text="Remover"
             android:textSize="12sp"
             app:chipIcon="@drawable/ic_fav_filled"
-            app:chipIconTint="@color/teal200"
+            app:chipIconTint="@color/colorSecondary"
             app:iconStartPadding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

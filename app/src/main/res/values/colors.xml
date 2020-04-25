@@ -4,4 +4,9 @@
     <color name="purple500">#6200EE</color>
     <color name="purple700">#3700B3</color>
     <color name="teal200">#03DAC5</color>
+
+    <color name="colorPrimary">#0288d1</color>
+    <color name="colorPrimaryDar">#005b9f</color>
+    <color name="colorSecondary">#c62828</color>
+
 </resources>
