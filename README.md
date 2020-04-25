@@ -16,8 +16,8 @@ Nessa parte do processo de recrutamento você desenvolverá uma aplicação Andr
 
 + ### Pontos extras:
 	* OK - Paginação com scroll infinito na tela de filmes.
-	* Filtro de busca pelo nome do filme na tela de Favoritos. Exibir uma tela diferente para quando não houver resultado na busca.
-	* OK Ação de remover o filme da lista de Favoritos.
+	* OK - Filtro de busca pelo nome do filme na tela de Favoritos. Exibir uma tela diferente para quando não houver resultado na busca.
+	* OK - Ação de remover o filme da lista de Favoritos.
 	* NOK - Testes unitários.
 	* NOK - Testes funcionais.
 

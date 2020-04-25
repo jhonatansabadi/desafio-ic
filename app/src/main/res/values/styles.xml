@@ -5,9 +5,11 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDar</item>
         <item name="colorAccent">@color/colorSecondary</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
     </style>
 
-    <style name="Theme.App.NoActionBar">
+    <style name="Theme.App.NoActionBar" parent="Theme.App">
+
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>

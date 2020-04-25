@@ -31,10 +31,4 @@ class FavMovieViewModel (
         emit(deleted)
     }
 
-    private fun pagedListConfig() = PagedList.Config.Builder()
-        .setInitialLoadSizeHint(20)
-        .setEnablePlaceholders(false)
-        .setPrefetchDistance(5)
-        .build()
-
 }

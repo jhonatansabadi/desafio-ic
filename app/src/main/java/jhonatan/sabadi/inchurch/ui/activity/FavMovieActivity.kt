@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.transition.MaterialContainerTransform
 import jhonatan.sabadi.inchurch.R
+import jhonatan.sabadi.inchurch.interfaces.OnEmptyScreen
 import jhonatan.sabadi.inchurch.interfaces.OnRecyclerViewItemListener
 import jhonatan.sabadi.inchurch.model.Movie
 import jhonatan.sabadi.inchurch.ui.adapter.FavMovieAdapter
@@ -28,13 +29,8 @@ import kotlinx.android.synthetic.main.activity_fav_movie.*
 class FavMovieActivity :
     AppCompatActivity(),
     OnRecyclerViewItemListener,
-    SearchView.OnQueryTextListener {
-
-    private val movieViewModel by lazy {
-        val factory by lazy { MovieViewModelFactory(application) }
-        val provider = ViewModelProviders.of(this, factory)
-        provider.get(MovieViewModel::class.java)
-    }
+    SearchView.OnQueryTextListener,
+    OnEmptyScreen {
 
     private val favMovieViewModel by lazy {
         val factory by lazy { FavMovieViewModelFactory(application) }
@@ -43,7 +39,7 @@ class FavMovieActivity :
     }
 
     private val favMovieAdapter by lazy {
-        FavMovieAdapter(this)
+        FavMovieAdapter(this, this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,11 +55,6 @@ class FavMovieActivity :
     private fun initToolbar() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-    }
-
-    override fun onNavigateUp(): Boolean {
-        onBackPressed()
-        return true
     }
 
     private fun initSharedElementEffect() {
@@ -85,7 +76,6 @@ class FavMovieActivity :
     private fun initMovieList() {
         favMovieViewModel.favMovies.observe(this, Observer {
             favMovieAdapter.submitList(it)
-            //hideLoading()
         })
     }
 
@@ -122,7 +112,7 @@ class FavMovieActivity :
         searchView.setOnQueryTextListener(this)
         searchView.setIconified(false)
 
-        searchItem.setOnActionExpandListener(object: MenuItem.OnActionExpandListener{
+        searchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
                 return true
             }
@@ -135,6 +125,13 @@ class FavMovieActivity :
         return true
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (android.R.id.home == item.itemId) {
+            onBackPressed()
+        }
+        return true
+    }
+
     override fun onQueryTextSubmit(query: String?): Boolean {
         favMovieAdapter.filter(query)
         return true
@@ -144,8 +141,17 @@ class FavMovieActivity :
         return true
     }
 
+    override fun onEmptyScreenListener(isEmpty: Boolean) {
+        when {
+            isEmpty -> favMovieEmptyImage.visibility = View.VISIBLE
+            else -> favMovieEmptyImage.visibility = View.GONE
+        }
+    }
+
     override fun onBackPressed() {
         val intent = Intent(this, MovieActivity::class.java)
         startActivity(intent)
     }
+
+
 }

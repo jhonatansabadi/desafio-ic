@@ -3,17 +3,17 @@ package jhonatan.sabadi.inchurch.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.chip.Chip
 import jhonatan.sabadi.inchurch.R
 import jhonatan.sabadi.inchurch.extensions.loadImageFromUrl
+import jhonatan.sabadi.inchurch.interfaces.OnEmptyScreen
 import jhonatan.sabadi.inchurch.interfaces.OnRecyclerViewItemListener
 import jhonatan.sabadi.inchurch.model.Movie
 import kotlinx.android.synthetic.main.recycler_fav_movie.view.*
 
 class FavMovieAdapter(
-    private val onRecyclerViewItemListener: OnRecyclerViewItemListener
+    private val onRecyclerViewItemListener: OnRecyclerViewItemListener,
+    private val onEmptyScreen: OnEmptyScreen
 ) : RecyclerView.Adapter<FavMovieAdapter.FavMovieViewHolder>() {
 
     private val favMovies = mutableListOf<Movie>()
@@ -54,11 +54,17 @@ class FavMovieAdapter(
         favMovies.clear()
         favMovies.addAll(newFavMovies)
         notifyDataSetChanged()
+        emptyScreen()
     }
 
     fun remove(position: Int) {
         favMovies.removeAt(position)
         notifyItemRemoved(position)
+        emptyScreen()
+    }
+
+    private fun emptyScreen() {
+        onEmptyScreen.onEmptyScreenListener(favMovies.isEmpty())
     }
 
     override fun getItemCount(): Int = favMovies.size
