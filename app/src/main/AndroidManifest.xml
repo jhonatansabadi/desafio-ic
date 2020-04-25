@@ -12,11 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.App">
+
         <activity android:name=".ui.activity.FavMovieActivity"></activity>
+
         <activity
             android:name=".ui.activity.DetailsActivity"
-            android:theme="@style/Theme.App.NoActionBar"
-            android:parentActivityName=".ui.activity.MovieActivity"/>
+            android:parentActivityName=".ui.activity.MovieActivity"
+            android:theme="@style/Theme.App.NoActionBar" />
+
         <activity android:name=".ui.activity.MovieActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

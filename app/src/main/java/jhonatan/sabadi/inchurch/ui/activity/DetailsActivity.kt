@@ -16,7 +16,9 @@ import jhonatan.sabadi.inchurch.R
 import jhonatan.sabadi.inchurch.extensions.loadImageFromUrl
 import jhonatan.sabadi.inchurch.model.Movie
 import jhonatan.sabadi.inchurch.ui.viewmodel.FavMovieViewModel
+import jhonatan.sabadi.inchurch.ui.viewmodel.MovieViewModel
 import jhonatan.sabadi.inchurch.ui.viewmodel.factory.FavMovieViewModelFactory
+import jhonatan.sabadi.inchurch.ui.viewmodel.factory.MovieViewModelFactory
 import kotlinx.android.synthetic.main.activity_details.*
 import kotlinx.android.synthetic.main.content_scrolling.*
 
@@ -24,6 +26,12 @@ class DetailsActivity : AppCompatActivity() {
 
     private lateinit var movie: Movie
     private val REQUEST_CODE = 1
+    private val movieViewModel by lazy {
+        val factory by lazy { MovieViewModelFactory(application) }
+        val provider = ViewModelProviders.of(this, factory)
+        provider.get(MovieViewModel::class.java)
+    }
+
     private val favMovieViewModel by lazy {
         val factory by lazy { FavMovieViewModelFactory(application) }
         val provider = ViewModelProviders.of(this, factory)
@@ -64,15 +72,23 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun loadGenres() {
-
+        movieViewModel.getGenres(movie.genreIds).observe(this, Observer {
+            val genresText = it.joinToString(separator = ", ")
+            detailsGenres.text = genresText
+        })
     }
 
     private fun iniToolbar() {
+        anim_toolbar.apply {
+            setNavigationIcon(R.drawable.ic_back)
+            setNavigationOnClickListener { onBackPressed() }
+            title = ""
+        }
         setSupportActionBar(anim_toolbar)
-        anim_toolbar.setNavigationIcon(R.drawable.ic_back)
-        anim_toolbar.setNavigationOnClickListener { onBackPressed() }
-        actionBar?.setDisplayHomeAsUpEnabled(true)
-        actionBar?.setDisplayShowHomeEnabled(true)
+        actionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+        }
         collapsing_toolbar.title = ""
     }
 

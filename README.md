@@ -11,13 +11,13 @@ Nessa parte do processo de recrutamento você desenvolverá uma aplicação Andr
 	* OK - Loading no carregamento da listagem de filmes.
 	* OK - Tratamento de erros(falta de internet e erro na api) na tela de Listagem de Filmes.
 	* OK - Tela de Favoritos com a listagem dos filmes marcados como favorito. Essa tela será acessada no ícone de favoritos na toolbar da Listagem de Filmes.
-	*  +/- Tela de detalhe do filme. Para as informações de gêneros do filme, utilize esse [endpoint](https://developers.themoviedb.org/3/genres/get-movie-list).
-	* Ação de favoritar um filme na tela de detalhe. Todo o controle será em armazenamento local.
+	* OK - Tela de detalhe do filme. Para as informações de gêneros do filme, utilize esse [endpoint](https://developers.themoviedb.org/3/genres/get-movie-list).
+	* OK - Ação de favoritar um filme na tela de detalhe. Todo o controle será em armazenamento local.
 
 + ### Pontos extras:
 	* OK - Paginação com scroll infinito na tela de filmes.
 	* Filtro de busca pelo nome do filme na tela de Favoritos. Exibir uma tela diferente para quando não houver resultado na busca.
-	* +/- Ação de remover o filme da lista de Favoritos.
+	* OK Ação de remover o filme da lista de Favoritos.
 	* NOK - Testes unitários.
 	* NOK - Testes funcionais.
 

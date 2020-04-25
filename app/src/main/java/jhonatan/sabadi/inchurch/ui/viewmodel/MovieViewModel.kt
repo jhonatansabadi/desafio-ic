@@ -8,6 +8,7 @@ import androidx.lifecycle.liveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import jhonatan.sabadi.inchurch.api.datasource.MovieDataSourceFactory
+import jhonatan.sabadi.inchurch.model.Genre
 import jhonatan.sabadi.inchurch.model.Movie
 import jhonatan.sabadi.inchurch.repository.MovieRepository
 import jhonatan.sabadi.inchurch.ui.viewmodel.resource.Resource
@@ -31,6 +32,11 @@ class MovieViewModel(
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    fun getGenres(ids: List<Int>): LiveData<List<String>> = liveData {
+        val data = movieRepository.getGneres(ids)
+        emit(data)
     }
 
     private fun pagedListConfig() = PagedList.Config.Builder()

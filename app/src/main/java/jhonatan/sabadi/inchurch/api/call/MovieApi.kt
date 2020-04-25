@@ -1,6 +1,7 @@
 package jhonatan.sabadi.inchurch.api.call
 
 import jhonatan.sabadi.inchurch.model.Genre
+import jhonatan.sabadi.inchurch.model.GenreResult
 import jhonatan.sabadi.inchurch.model.MovieResult
 import retrofit2.Call
 import retrofit2.http.GET
@@ -19,6 +20,6 @@ interface MovieApi {
     fun getGenres(
         @Query("api_key") apiKey: String? = "639fef3ed98e333f7d0da8310b6ec26a",
         @Query("language") language: String? = "pt-BR",
-    ): Call<List<Genre>>
+    ): Call<GenreResult>
 
 }
