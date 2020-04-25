@@ -64,6 +64,13 @@ class MovieAdapter(
                 movieTitle.text = movie.title
                 setImage(movie)
                 movieFav.apply {
+                    if (movie.isFavorite == null) {
+                        isChecked = false
+                    } else {
+                        movie.isFavorite?.let {
+                            isChecked = it
+                        }
+                    }
                     setOnFavClicked(movie)
                 }
             }
@@ -71,11 +78,24 @@ class MovieAdapter(
 
         private fun CheckBox.setOnFavClicked(movie: Movie) {
             setOnClickListener {
-                isChecked = !isChecked
-                movie.isFavorite = isChecked
+                if (movie.isFavorite == null) {
+                    movie.isFavorite = true
+                    isChecked = true
+                } else {
+                    movie.isFavorite?.let {
+                        if (it) {
+                            isChecked = false
+                            movie.isFavorite = false
+                        } else {
+                            isChecked = true
+                            movie.isFavorite = true
+                        }
+                    }
+                }
                 onOnRecyclerViewItemListener.onFavIconClicked(it, adapterPosition, isChecked, movie)
             }
         }
+
 
         private fun View.setImage(movie: Movie) {
             movie.posterPath?.let {

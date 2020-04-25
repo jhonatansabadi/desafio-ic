@@ -16,9 +16,9 @@
 
 
         <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="150dp"
-            android:layout_height="250dp"
+            android:id="@+id/favMovieImage"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
             android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -26,37 +26,59 @@
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/favMovieTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:text="TextView"
+            android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/textView3"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintEnd_toStartOf="@+id/favMovieDate"
+            app:layout_constraintStart_toEndOf="@+id/favMovieImage"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
+            android:id="@+id/favMovieDesc"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="TextView"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@+id/textView"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/favMovieTitle"
+            app:layout_constraintTop_toBottomOf="@+id/favMovieTitle"
+            tools:text="@tools:sample/lorem/random" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/favMovieDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             android:text="TextView"
-            android:textSize="10sp"
+            android:textColor="?android:attr/colorAccent"
+            android:textSize="12sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView" />
+            app:layout_constraintTop_toTopOf="@+id/favMovieTitle" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/favMovieCheckBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:chipIcon="@drawable/ic_fav_filled"
+            app:chipIconTint="@color/teal200"
+            android:paddingStart="8dp"
+            app:iconStartPadding="8dp"
+            android:text="Remover dos Favoritos"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/favMovieDesc"
+            app:layout_constraintTop_toBottomOf="@+id/favMovieDesc" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

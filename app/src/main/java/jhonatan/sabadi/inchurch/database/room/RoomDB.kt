@@ -10,7 +10,7 @@ import jhonatan.sabadi.inchurch.model.Movie
     entities = arrayOf(
         Movie::class
     ),
-    version = 9
+    version = 1
 )
 abstract class RoomDB : RoomDatabase() {
 

@@ -44,6 +44,6 @@ data class Movie(
     @SerializedName("release_date")
     val releaseDate: String,
 
-    var isFavorite: Boolean = false
+    var isFavorite: Boolean? = null
 
 ) : Serializable

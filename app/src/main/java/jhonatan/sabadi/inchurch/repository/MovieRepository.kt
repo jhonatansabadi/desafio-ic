@@ -35,9 +35,7 @@ class MovieRepository(
     private suspend fun setFavMovie(data: MovieResult): List<Movie> {
         val movies = data.results.map {
             val favMovie = favMovieRepository.getByMovieId(it.id)
-            favMovie?.let {
-                it.isFavorite = favMovie.isFavorite
-            }
+            it.isFavorite = favMovie?.isFavorite ?: false
             it
         }
         return movies
