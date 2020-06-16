@@ -3,29 +3,24 @@ package jhonatan.sabadi.inchurch.repository
 import android.content.Context
 import jhonatan.sabadi.inchurch.api.call.MovieApi
 import jhonatan.sabadi.inchurch.api.retrofit.RetrofitService
+import jhonatan.sabadi.inchurch.database.dao.GenreDao
 import jhonatan.sabadi.inchurch.database.room.RoomDBSingleton
-import jhonatan.sabadi.inchurch.model.Genre
 import jhonatan.sabadi.inchurch.model.Movie
 import jhonatan.sabadi.inchurch.model.MovieResult
 import retrofit2.await
-import java.lang.Exception
+import javax.inject.Inject
 
-class MovieRepository(
-    private val context: Context
+class MovieRepository @Inject constructor(
+    private val genreDao: GenreDao
 ) {
+
+    @Inject
+    lateinit var favMovieRepository: FavMovieRepository
 
     private val retrofit by lazy {
         RetrofitService.createService(MovieApi::class.java)
     }
 
-    private val genreDao by lazy {
-        val db = RoomDBSingleton.getInstance(context)
-        db.genreDao()
-    }
-
-    private val favMovieRepository by lazy {
-        FavMovieRepository(context)
-    }
 
     suspend fun getMovies(page: Int): List<Movie> {
         try {

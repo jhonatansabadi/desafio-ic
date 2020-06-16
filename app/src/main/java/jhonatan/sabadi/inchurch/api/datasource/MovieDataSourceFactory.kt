@@ -7,8 +7,9 @@ import androidx.paging.PagedList
 import jhonatan.sabadi.inchurch.database.dao.FavMovieDao
 import jhonatan.sabadi.inchurch.model.Movie
 import jhonatan.sabadi.inchurch.repository.MovieRepository
+import javax.inject.Inject
 
-class MovieDataSourceFactory(
+class MovieDataSourceFactory @Inject constructor(
     private val context: Context
 ) : DataSource.Factory<Int, Movie>() {
 

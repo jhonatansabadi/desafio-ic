@@ -6,13 +6,16 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.scopes.ActivityScoped
 import jhonatan.sabadi.inchurch.R
 import jhonatan.sabadi.inchurch.extensions.loadImageFromUrl
 import jhonatan.sabadi.inchurch.interfaces.OnRecyclerViewItemListener
 import jhonatan.sabadi.inchurch.model.Movie
 import kotlinx.android.synthetic.main.recycler_movie.view.*
+import javax.inject.Inject
 
-class MovieAdapter(
+@ActivityScoped
+class MovieAdapter @Inject constructor(
     private val onOnRecyclerViewItemListener: OnRecyclerViewItemListener
 ) : PagedListAdapter<Movie, MovieAdapter.MovieViewHolder>(DiffUtilCallBack()) {
 

@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialContainerTransformSharedElementCallback
+import dagger.hilt.android.AndroidEntryPoint
 import jhonatan.sabadi.inchurch.R
 import jhonatan.sabadi.inchurch.extensions.loadImageFromUrl
 import jhonatan.sabadi.inchurch.model.Movie
@@ -22,6 +23,7 @@ import jhonatan.sabadi.inchurch.ui.viewmodel.factory.MovieViewModelFactory
 import kotlinx.android.synthetic.main.activity_details.*
 import kotlinx.android.synthetic.main.content_scrolling.*
 
+@AndroidEntryPoint
 class DetailsActivity : AppCompatActivity() {
 
     private lateinit var movie: Movie

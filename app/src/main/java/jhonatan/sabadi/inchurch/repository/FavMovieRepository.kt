@@ -1,19 +1,13 @@
 package jhonatan.sabadi.inchurch.repository
 
-import android.content.Context
 import androidx.lifecycle.LiveData
-import androidx.paging.DataSource
-import jhonatan.sabadi.inchurch.database.room.RoomDBSingleton
+import jhonatan.sabadi.inchurch.database.dao.FavMovieDao
 import jhonatan.sabadi.inchurch.model.Movie
+import javax.inject.Inject
 
-class FavMovieRepository(
-    private val context: Context
+class FavMovieRepository @Inject constructor(
+    private val favMovieDao: FavMovieDao
 ) {
-
-    private val favMovieDao by lazy {
-        val db = RoomDBSingleton.getInstance(context)
-        db.favModieDao()
-    }
 
     fun getAll(): LiveData<List<Movie>> = favMovieDao.getAll()
 

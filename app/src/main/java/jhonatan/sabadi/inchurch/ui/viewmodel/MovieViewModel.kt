@@ -1,24 +1,19 @@
 package jhonatan.sabadi.inchurch.ui.viewmodel
 
-import android.content.Context
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import jhonatan.sabadi.inchurch.api.datasource.MovieDataSourceFactory
-import jhonatan.sabadi.inchurch.model.Genre
 import jhonatan.sabadi.inchurch.model.Movie
 import jhonatan.sabadi.inchurch.repository.MovieRepository
-import jhonatan.sabadi.inchurch.ui.viewmodel.resource.Resource
 
-class MovieViewModel(
-    private val context: Context
+class MovieViewModel @ViewModelInject constructor(
+    private val movieRepository: MovieRepository,
+    private val movieDataSourceFactory: MovieDataSourceFactory
 ) : ViewModel() {
-
-    private val movieDataSourceFactory by lazy { MovieDataSourceFactory(context) }
-    private val movieRepository by lazy { MovieRepository(context) }
 
     val movies get() = _movies
 

@@ -10,8 +10,9 @@ import jhonatan.sabadi.inchurch.interfaces.OnEmptyScreen
 import jhonatan.sabadi.inchurch.interfaces.OnRecyclerViewItemListener
 import jhonatan.sabadi.inchurch.model.Movie
 import kotlinx.android.synthetic.main.recycler_fav_movie.view.*
+import javax.inject.Inject
 
-class FavMovieAdapter(
+class FavMovieAdapter @Inject constructor(
     private val onRecyclerViewItemListener: OnRecyclerViewItemListener,
     private val onEmptyScreen: OnEmptyScreen
 ) : RecyclerView.Adapter<FavMovieAdapter.FavMovieViewHolder>() {
