@@ -1,19 +1,16 @@
 package jhonatan.sabadi.inchurch.api.datasource
 
-import android.content.Context
 import androidx.paging.PageKeyedDataSource
 import jhonatan.sabadi.inchurch.model.Movie
 import jhonatan.sabadi.inchurch.repository.MovieRepository
-import jhonatan.sabadi.inchurch.ui.viewmodel.resource.Resource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MovieDataSource(
-    private val context: Context
+class MovieDataSource @Inject constructor(
+    private val movieRepository: MovieRepository
 ) : PageKeyedDataSource<Int, Movie>() {
-
-    private val movieRepository = MovieRepository(context)
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,

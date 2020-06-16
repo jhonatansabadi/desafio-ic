@@ -1,18 +1,14 @@
 package jhonatan.sabadi.inchurch.ui.viewmodel
 
-import android.content.Context
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
 import jhonatan.sabadi.inchurch.model.Movie
 import jhonatan.sabadi.inchurch.repository.FavMovieRepository
 
-class FavMovieViewModel (
-    private val context: Context
+class FavMovieViewModel @ViewModelInject constructor(
+    private val favMovieRepository: FavMovieRepository
 ) : ViewModel() {
-
-    val favMovieRepository  = FavMovieRepository(context)
 
     val favMovies get() = _favMovies
 

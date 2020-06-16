@@ -11,9 +11,11 @@ import jhonatan.sabadi.inchurch.model.Movie
 import jhonatan.sabadi.inchurch.repository.MovieRepository
 
 class MovieViewModel @ViewModelInject constructor(
-    private val movieRepository: MovieRepository,
-    private val movieDataSourceFactory: MovieDataSourceFactory
+    private val movieRepository: MovieRepository
 ) : ViewModel() {
+
+
+    private val movieDataSourceFactory = MovieDataSourceFactory(movieRepository)
 
     val movies get() = _movies
 

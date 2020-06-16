@@ -3,23 +3,17 @@ package jhonatan.sabadi.inchurch.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.view.Window
 import android.widget.Toast
-import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.google.android.material.snackbar.Snackbar
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import com.google.android.material.transition.MaterialContainerTransform
-import com.google.android.material.transition.MaterialContainerTransformSharedElementCallback
 import dagger.hilt.android.AndroidEntryPoint
 import jhonatan.sabadi.inchurch.R
 import jhonatan.sabadi.inchurch.extensions.loadImageFromUrl
 import jhonatan.sabadi.inchurch.model.Movie
 import jhonatan.sabadi.inchurch.ui.viewmodel.FavMovieViewModel
 import jhonatan.sabadi.inchurch.ui.viewmodel.MovieViewModel
-import jhonatan.sabadi.inchurch.ui.viewmodel.factory.FavMovieViewModelFactory
-import jhonatan.sabadi.inchurch.ui.viewmodel.factory.MovieViewModelFactory
+
 import kotlinx.android.synthetic.main.activity_details.*
 import kotlinx.android.synthetic.main.content_scrolling.*
 
@@ -28,17 +22,9 @@ class DetailsActivity : AppCompatActivity() {
 
     private lateinit var movie: Movie
     private val REQUEST_CODE = 1
-    private val movieViewModel by lazy {
-        val factory by lazy { MovieViewModelFactory(application) }
-        val provider = ViewModelProviders.of(this, factory)
-        provider.get(MovieViewModel::class.java)
-    }
 
-    private val favMovieViewModel by lazy {
-        val factory by lazy { FavMovieViewModelFactory(application) }
-        val provider = ViewModelProviders.of(this, factory)
-        provider.get(FavMovieViewModel::class.java)
-    }
+    private val favMovieViewModel by viewModels<FavMovieViewModel>()
+    private val movieViewModel by viewModels<MovieViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

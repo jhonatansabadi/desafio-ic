@@ -13,7 +13,8 @@ import jhonatan.sabadi.inchurch.model.Movie
         Movie::class,
         Genre::class
     ),
-    version = 3
+    version = 3,
+    exportSchema = false
 )
 abstract class RoomDB : RoomDatabase() {
 

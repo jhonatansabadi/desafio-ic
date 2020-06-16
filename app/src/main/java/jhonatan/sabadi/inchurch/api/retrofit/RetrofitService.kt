@@ -1,13 +1,8 @@
 package jhonatan.sabadi.inchurch.api.retrofit
 
-import android.R
-import android.content.Context
 import com.google.gson.GsonBuilder
-import okhttp3.Cache
-import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
 
 object RetrofitService {
 

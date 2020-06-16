@@ -21,7 +21,7 @@ import jhonatan.sabadi.inchurch.model.Movie
 import jhonatan.sabadi.inchurch.ui.adapter.MovieAdapter
 import jhonatan.sabadi.inchurch.ui.viewmodel.FavMovieViewModel
 import jhonatan.sabadi.inchurch.ui.viewmodel.MovieViewModel
-import jhonatan.sabadi.inchurch.ui.viewmodel.factory.FavMovieViewModelFactory
+import jhonatan.sabadi.inchurch.ui.viewmodel.factFavMovieViewModelFactory
 import kotlinx.android.synthetic.main.activity_movie.*
 
 @AndroidEntryPoint
@@ -31,13 +31,8 @@ class MovieActivity :
 
     private val REQUEST_CODE: Int = 0
 
+    private val favMovieViewModel by viewModels<FavMovieViewModel>()
     private val movieViewModel by viewModels<MovieViewModel>()
-
-    private val favMovieViewModel by lazy {
-        val factory by lazy { FavMovieViewModelFactory(application) }
-        val provider = ViewModelProviders.of(this, factory)
-        provider.get(FavMovieViewModel::class.java)
-    }
 
     private val movieAdapter by lazy {
         MovieAdapter(this)
@@ -85,10 +80,10 @@ class MovieActivity :
     }
 
     private fun initMovieList() {
-//        movieViewModel.movies.observe(this, Observer {
-//            movieAdapter.submitList(it)
-//            hideLoading()
-//        })
+        movieViewModel.movies.observe(this, Observer {
+            movieAdapter.submitList(it)
+            hideLoading()
+        })
     }
 
     private fun showEmptyBackground() {

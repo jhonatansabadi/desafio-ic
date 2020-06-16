@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
@@ -14,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.transition.MaterialContainerTransform
+import dagger.hilt.android.AndroidEntryPoint
 import jhonatan.sabadi.inchurch.R
 import jhonatan.sabadi.inchurch.interfaces.OnEmptyScreen
 import jhonatan.sabadi.inchurch.interfaces.OnRecyclerViewItemListener
@@ -21,23 +23,19 @@ import jhonatan.sabadi.inchurch.model.Movie
 import jhonatan.sabadi.inchurch.ui.adapter.FavMovieAdapter
 import jhonatan.sabadi.inchurch.ui.viewmodel.FavMovieViewModel
 import jhonatan.sabadi.inchurch.ui.viewmodel.MovieViewModel
-import jhonatan.sabadi.inchurch.ui.viewmodel.factory.FavMovieViewModelFactory
+
 import jhonatan.sabadi.inchurch.ui.viewmodel.factory.MovieViewModelFactory
 import kotlinx.android.synthetic.main.activity_fav_movie.*
 
-
+@AndroidEntryPoint
 class FavMovieActivity :
     AppCompatActivity(),
     OnRecyclerViewItemListener,
     SearchView.OnQueryTextListener,
     OnEmptyScreen {
 
-    private val favMovieViewModel by lazy {
-        val factory by lazy { FavMovieViewModelFactory(application) }
-        val provider = ViewModelProviders.of(this, factory)
-        provider.get(FavMovieViewModel::class.java)
-    }
 
+    private val favMovieViewModel by viewModels<FavMovieViewModel>()
     private val favMovieAdapter by lazy {
         FavMovieAdapter(this, this)
     }

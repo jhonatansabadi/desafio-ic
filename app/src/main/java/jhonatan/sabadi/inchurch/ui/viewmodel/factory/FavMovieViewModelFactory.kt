@@ -8,10 +8,10 @@ import jhonatan.sabadi.inchurch.repository.MovieRepository
 import jhonatan.sabadi.inchurch.ui.viewmodel.FavMovieViewModel
 import jhonatan.sabadi.inchurch.ui.viewmodel.MovieViewModel
 
-class FavMovieViewModelFactory(
-    private val application: Application
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return FavMovieViewModel(application) as T
-    }
-}
+//class FavMovieViewModelFactory(
+//    private val favMovieRepository: FavMovieRepository
+//) : ViewModelProvider.Factory {
+//    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//        return FavMovieViewModel(favMovieRepository) as T
+//    }
+//}

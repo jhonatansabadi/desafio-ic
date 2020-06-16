@@ -1,10 +1,7 @@
 package jhonatan.sabadi.inchurch.repository
 
-import android.content.Context
 import jhonatan.sabadi.inchurch.api.call.MovieApi
-import jhonatan.sabadi.inchurch.api.retrofit.RetrofitService
 import jhonatan.sabadi.inchurch.database.dao.GenreDao
-import jhonatan.sabadi.inchurch.database.room.RoomDBSingleton
 import jhonatan.sabadi.inchurch.model.Movie
 import jhonatan.sabadi.inchurch.model.MovieResult
 import retrofit2.await
@@ -17,10 +14,8 @@ class MovieRepository @Inject constructor(
     @Inject
     lateinit var favMovieRepository: FavMovieRepository
 
-    private val retrofit by lazy {
-        RetrofitService.createService(MovieApi::class.java)
-    }
-
+    @Inject
+    lateinit var retrofit: MovieApi
 
     suspend fun getMovies(page: Int): List<Movie> {
         try {
